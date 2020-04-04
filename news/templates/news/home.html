@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Home</title>
+</head>
+   
+{% block content %}
+    <body>
+        <style>
+            /* To round the corners of image */
+            img{
+              border-radius:5%;
+            }
+            </style>
+        <div class="jumbotron">
+            <center>
+                <a href="{% url 'scrape' %}" class="btn btn-success"><p style="text-align:center;">Get more news</p></a>
+            </form>
+        </center>
+        </div>  
+      
+        <div class="w3-container w3-cream">
+          <span class="w3-margin-bottom"><h3>Top Headlines</h3></span>
+      </div>
+
+      <div class="w3-row-padding">
+          {% for object in headlines_dic %}
+          <div class="w3-third w3-container w3-margin-bottom">              
+            <a href="{{object.url}}" target="_blank" >
+              <img src="{{object.image}}" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+            </a>  
+            
+            <div class="w3-container w3-white" style="height:50%">
+              <div><a href="{{object.url}}" target="_blank">
+                <h5 class="card-title">{{object.title}}</h5></a>
+              </div>             
+              <p><img class="website_icon" src="{{object.websiteIcon}}" style="width:10%" > </img> {{object.website_name}}</p>
+            <div class="">
+              <p>{{object.timeDiff}}</p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+        </div>
+
+        <div class="w3-container w3-cream">
+          <span class="w3-margin-bottom"><h3>World</h3></span>
+      </div>
+
+      <div class="w3-row-padding">
+          {% for object in world_dic %}
+          <div class="w3-third w3-container w3-margin-bottom">              
+            <a href="{{object.url}}" target="_blank" >
+              <img src="{{object.image}}" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+            </a>
+            <div class="w3-container w3-white" style="height:50%">
+              <div><a href="{{object.url}}" target="_blank">
+                <h5 class="card-title">{{object.title}}</h5></a>
+              </div>             
+              <p><img class="website_icon" src="{{object.websiteIcon}}" style="width:10%" > </img> {{object.website_name}}</p>
+            <div class="">
+              <p>{{object.timeDiff}}</p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+        </div>
+
+        <div class="w3-container w3-cream">
+          <span class="w3-margin-bottom"><h3>Tech</h3></span>
+      </div>
+
+        <div class="w3-row-padding">
+          {% for object in tech_dic %}
+          <div class="w3-third w3-container w3-margin-bottom">              
+            <a href="{{object.url}}" target="_blank" >
+              <img src="{{object.image}}" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+            </a>
+            <div class="w3-container w3-white" style="height:50%">
+              <div><a href="{{object.url}}" target="_blank">
+                <h5 class="card-title">{{object.title}}</h5></a>
+              </div>             
+              <p><img class="website_icon" src="{{object.websiteIcon}}" style="width:10%" > </img> {{object.website_name}}</p>
+            <div class="">
+              <p>{{object.timeDiff}}</p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+        </div>
+
+        <div class="w3-container w3-cream">
+          <span class="w3-margin-bottom"><h3>Economy</h3></span>
+      </div>
+
+        <div class="w3-row-padding">
+          {% for object in economic_dic %}
+          <div class="w3-third w3-container w3-margin-bottom">              
+            <a href="{{object.url}}" target="_blank" >
+              <img src="{{object.image}}" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+            </a>
+            <div class="w3-container w3-white" style="height:50%">
+              <div><a href="{{object.url}}" target="_blank">
+                <h5 class="card-title">{{object.title}}</h5></a>
+              </div>             
+              <p><img class="website_icon" src="{{object.websiteIcon}}" style="width:10%" > </img> {{object.website_name}}</p>
+            <div class="">
+              <p>{{object.timeDiff}}</p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+        </div>
+
+        <div class="w3-container w3-cream">
+          <span class="w3-margin-bottom"><h3>Sports</h3></span>
+      </div>
+
+        <div class="w3-row-padding">
+          {% for object in sports_dic %}
+          <div class="w3-third w3-container w3-margin-bottom">              
+            <a href="{{object.url}}" target="_blank" >
+              <img src="{{object.image}}" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+            </a>
+            <div class="w3-container w3-white" style="height:50%">
+              <div><a href="{{object.url}}" target="_blank">
+                <h5 class="card-title">{{object.title}}</h5></a>
+              </div>             
+              <p><img class="website_icon" src="{{object.websiteIcon}}" style="width:10%" > </img> {{object.website_name}}</p>
+            <div class="">
+              <p>{{object.timeDiff}}</p>
+            </div>
+          </div>
+        </div>
+          {% endfor %}
+        </div>
+
+
+    {% endblock %}
+</html> 
