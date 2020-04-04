@@ -48,8 +48,8 @@ def run_scrapers():
     indianxpress = IndianXpress_scraper()
     indianxpress.start_scraping()
 
-    times_of_india = TimesOfindia_scraper()
-    times_of_india.start_scraping()
+    #times_of_india = TimesOfindia_scraper()
+    #times_of_india.start_scraping()
 #____________________TECH_________________________________
     
     hindustantimes_tech = Hindustantimes_tech_scraper()

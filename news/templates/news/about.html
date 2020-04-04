@@ -11,13 +11,13 @@
 		
 		@media screen and (min-width: 601px) {
 		  div.example {
-			font-size: 80px;
+			font-size: 500px;
 		  }
 		}
 		
 		@media screen and (max-width: 600px) {
 		  div.example {
-			font-size: 30px;
+			font-size: 200px;
 		  }
 		}
 		</style>
@@ -27,21 +27,22 @@
 	
 		
 		<div class="example">
-		<h3>What is news aggregator ?</h3>
-		<p>In computing, a news aggregator, also termed a feed aggregator,
+		<ul><h3>What is news aggregator ?</h3></ul>
+		<ul><p>In computing, a news aggregator, also termed a feed aggregator,
 			feed reader, news reader, RSS reader or simply an aggregator, 
 			is client software or a web application that aggregates 
 			syndicated web content such as online newspapers, blogs, podcasts,
 			and video blogs (vlogs) in one location for easy viewing. 
 			The updates distributed may include journal 
-			tables of contents, podcasts, videos, and news items</p>
+			tables of contents, podcasts, videos, and news items</p></ul>
 		
-		<p>This sample project uses web scraping techniques to get latest
+		<ul><p>This sample project uses web scraping techniques to get latest
 			and updated posts, direct from news websites.
-		</p>
+		</p></ul>
 
-		<h3>System Block diagram</h3>
-		<img src="https://raw.githubusercontent.com/sau88/News_Aggregator/master/system-block-diagram.png" style="width:100%;">
+		<ul><h3>System Block diagram</h3></ul>
+		<ul><div class="w3-row-padding">
+			<img src="https://raw.githubusercontent.com/sau88/django-news-aggregator/master/system-block-diagram.png" style="width:100%;"></div></ul>
 		<p><ul><b>1. </b>User sends http request to django's view</ul></p>
 		<p><ul><b>2. </b>django then triggers scrapers and wait there until all scrapers finished their task.</ul></p>
 		<p><ul><b>3. </b>There is separate scraper for each web, they first sends http request to web and wait for time out (5.0 seconds), if get 
@@ -54,113 +55,115 @@
 		<p><ul><b>7. </b>Post which having lowest time difference will be displayed first.</ul></p>
 		<p><ul><b>8. </b>Renderd to client</ul></p>
 
-		<h3>Challenges faced</h3>
-		<p><b>a. </b> The most tedious task in this whole project was to design such scraping code which 
+		<ul><h3>Challenges faced</h3></ul>
+		<ul><p><b>a. </b> The most tedious task in this whole project was to design such scraping code which 
 			can be used for any website, as started developing i found out that this would be 
 			next to impossible fit all web in just one scraping code, because today websites have 
 			number of design technologies, some use active java script for content rendering, some 
 			are dynamic in nature, and not even that, news blogs constantly changes their publication
-			formats.</p>
+			formats.</p></ul>
 
-			<p>
+			<ul><p>
 			For example, in case of live update, they often remove image or change html rendering format.
 			So no matter what i had to use separate ( or boilerplate code ) scraping code for each website.  
-		</p>
+			</p></ul>
 
-		<p><b>b. </b> The second difficulty i faced was with publication datetime formats, there is no universal
+		<ul><p><b>b. </b> The second difficulty i faced was with publication datetime formats, there is no universal
 		format, websites often uses different formats. Also publication dates scraped from different sources are
-		often found corrupted, so i had to handel these sort of data cleaning separately for each source</p>
-		<p>For example,</p> 
-				<li>hindustantimes 		= "Updated: Mar 14, 2020 15:07 IST"</li>
-				<li>theIndianXpress 	= "Updated: March 14, 2020  3:07:55 pm"</li> 
-				<li>deccanherald 		= "Updated: MAR 13 2020, 20:11PM IST"</li>
-				<li>economicsTimes 		= "Updated: Mar 14, 2020, 01.26 PM IST"</li>
-				<li>france24			= "2020-04-04T05:05:34+00:00"</li>
-			</p>
+		often found corrupted, so i had to handel these sort of data cleaning separately for each source</p></ul>
 		
-		<p><b>c. </b>The third difficulty was scraping technology, you cant use same technique for all websites, 
+		<ul><p>For example,</p></ul> 
+				<ul><li>hindustantimes 		= "Updated: Mar 14, 2020 15:07 IST"</li></ul>
+				<ul><li>theIndianXpress 	= "Updated: March 14, 2020  3:07:55 pm"</li></ul> 
+				<ul><li>deccanherald 		= "Updated: MAR 13 2020, 20:11PM IST"</li></ul> 
+				<ul><li>economicsTimes 		= "Updated: Mar 14, 2020, 01.26 PM IST"</li></ul>
+				<ul><li>france24			= "2020-04-04T05:05:34+00:00"</li></ul>
+			
+		
+		<ul><p><b>c. </b>The third difficulty was scraping technology, you cant use same technique for all websites, 
 			for example, some times i had to used BeautifulSoup, when i get failed in converting html source 
 			code into xml using lxml lib. BeautifulSoup uses HTML DOM search which guaranties correct result,
 			but it is quite slow. 
-		</p>
+		</p></ul>
 
 
 		
 
-		<h3>Limitations and further scope of improvements</h3>
-		<p>This project is uses view to trigger web scraping, when view get request it starts the scrapers
+		<ul><h3>Limitations and further scope of improvements</h3></ul>
+		<ul><p>This project is uses view to trigger web scraping, when view get request it starts the scrapers
 			which are executed sequentially, i have used requests lib for sending and receiving http
 			request which is synchronous in nature and also pretty slow too. 
-		</p>
-		<p> <b> Asynchronous web scraping approach : </b>
-		Too speed up scraping and processing of web source code we can use python's <a href="https://docs.scrapy.org/en/latest/" target="_blank">Scrapy</a> framework,
-		which is a known as master chef of web scraping, because of its asynchronous nature.
-		scrapy can run hundreds of scrapers concurrently and their speed of operation is marvelous.
-		we can integrate scrapy with this project and make it run asynchronously in background,
-		,so that at some schedule it automatically scrape data for us and save it into database.
-		Then user will just have to reload the home page and he will get all the updated news post.
-		For this purpose we have add a third party distributed task queues/scheduler 
-		like <a href="https://docs.celeryproject.org/en/stable/" target="_blank">celery</a> and a massage broker like 
-		<a href="https://redis.io/documentation" target="_blank">redis</a> 
-		or <a href="https://www.rabbitmq.com/documentation.html" target="_blank">rabbit-MQ</a>, i had successfully designed such system it worked like charm at localhost level
-		but it shown up so much trouble and anomalies at deployment.    
-		</p>
+		</p></ul>
+		
+		<ul><p> <b> Asynchronous web scraping approach : </b>
+			Too speed up scraping and processing of web source code we can use python's <a href="https://docs.scrapy.org/en/latest/" target="_blank">Scrapy</a> framework,
+			which is a known as master chef of web scraping, because of its asynchronous nature.
+			scrapy can run hundreds of scrapers concurrently and their speed of operation is marvelous.
+			we can integrate scrapy with this project and make it run asynchronously in background,
+			,so that at some schedule it automatically scrape data for us and save it into database.
+			Then user will just have to reload the home page and he will get all the updated news post.
+			For this purpose we have add a third party distributed task queues/scheduler 
+			like <a href="https://docs.celeryproject.org/en/stable/" target="_blank">celery</a> and a massage broker like 
+			<a href="https://redis.io/documentation" target="_blank">redis</a> 
+			or <a href="https://www.rabbitmq.com/documentation.html" target="_blank">rabbit-MQ</a>, i had successfully designed such system it worked like charm at localhost level
+			but it shown up so much trouble and anomalies at deployment.    
+			</p></ul>
 
 		
-		<h3>Technologies Used</h3>
-		<div class="w3-row-padding">
+		<ul><h3>Technologies Used</h3></ul>
+		<ul><div class="w3-row-padding">
 			<p>1. python's <a href="https://www.djangoproject.com" target="_blank">django</a> web framework</p>
 			<div class="w3-third w3-container w3-margin-bottom">              
 				<a href="https://www.djangoproject.com" target="_blank">
 				<img src="https://www.djangoproject.com/m/img/logos/django-logo-negative.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
 				</a>
 			</div>
-		</div>
+		</div></ul>
 
 
-		<div class="w3-row-padding">
-				<p>2. <a href="https://requests.readthedocs.io/en/master/" target="_blank">Requests</a> lib for sending and handeling http requests between different websites.</p>
-				<div class="w3-third w3-container w3-margin-bottom">              
-					<a href="https://requests.readthedocs.io/en/master/" target="_blank">
-					<img src="https://requests.readthedocs.io/en/master/_static/requests-sidebar.jpg" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
-					</a>
-				</div>
-			</div>
-
-		<div class="w3-row-padding">
-				<p>3. <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">BeautifulSoup</a> and <a href="https://lxml.de" target="_blank">lxml</a> 
-					libraries for searching and extracting data from html source page.
-					 <a href="https://requests.readthedocs.io/en/master/" target="_blank"></a></p>
-				<div class="w3-third w3-container w3-margin-bottom">              
-					<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">
-					<img src="https://miro.medium.com/max/490/1*NZz995dKNIjXnRqDroCqWg.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
-					</a>
-				</div>
-				<div class="w3-third w3-container w3-margin-bottom">              
-						<a href="https://lxml.de" target="_blank">
-						<img src="https://pbs.twimg.com/media/Dx-SGBiVAAExJZv.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
-						</a>
-					</div>
-				</div>
-		
-		<div class="w3-row-padding">
-		<p>4. For saving our news links, titles and images etc, we can use any data base at localhost ( default is <a href="https://www.sqlite.org/docs.html" target="_blank">sqlite3</a> --> a file based sql database )
-			but for cloud deployment, it was mandatory to use <a href="https://www.postgresql.org/docs/" target="_blank" >postgresql</a></p>
+		<ul><div class="w3-row-padding">
+			<p>2. <a href="https://requests.readthedocs.io/en/master/" target="_blank">Requests</a> lib for sending and handeling http requests between different websites.</p>
 			<div class="w3-third w3-container w3-margin-bottom">              
-					<a href="https://www.sqlite.org/docs.html" target="_blank">
-					<img src="https://www.sqlite.org/images/sqlite370_banner.gif" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+				<a href="https://requests.readthedocs.io/en/master/" target="_blank">
+				<img src="https://requests.readthedocs.io/en/master/_static/requests-sidebar.jpg" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+				</a>
+			</div>
+		</div></ul>
+
+		<ul><div class="w3-row-padding">
+			<p>3. <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">BeautifulSoup</a> and <a href="https://lxml.de" target="_blank">lxml</a> 
+				libraries for searching and extracting data from html source page.
+				 <a href="https://requests.readthedocs.io/en/master/" target="_blank"></a></p>
+			<div class="w3-third w3-container w3-margin-bottom">              
+				<a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/" target="_blank">
+				<img src="https://miro.medium.com/max/490/1*NZz995dKNIjXnRqDroCqWg.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+				</a>
+			</div>
+			<div class="w3-third w3-container w3-margin-bottom">              
+					<a href="https://lxml.de" target="_blank">
+					<img src="https://pbs.twimg.com/media/Dx-SGBiVAAExJZv.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
 					</a>
 				</div>
+			</div></ul>
+		
+		<ul><div class="w3-row-padding">
+			<p>4. For saving our news links, titles and images etc, we can use any data base at localhost ( default is <a href="https://www.sqlite.org/docs.html" target="_blank">sqlite3</a> --> a file based sql database )
+				but for cloud deployment, it was mandatory to use <a href="https://www.postgresql.org/docs/" target="_blank" >postgresql</a></p>
 				<div class="w3-third w3-container w3-margin-bottom">              
-						<a href="https://www.postgresql.org/docs/" target="_blank">
-						<img src="https://ih0.redbubble.net/image.703211490.4275/flat,1000x1000,075,f.u5.jpg" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+						<a href="https://www.sqlite.org/docs.html" target="_blank">
+						<img src="https://www.sqlite.org/images/sqlite370_banner.gif" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
 						</a>
 					</div>
-				</div>
+					<div class="w3-third w3-container w3-margin-bottom">              
+							<a href="https://www.postgresql.org/docs/" target="_blank">
+							<img src="https://ih0.redbubble.net/image.703211490.4275/flat,1000x1000,075,f.u5.jpg" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+							</a>
+						</div>
+					</div></ul>
 				
 		
 		
-		<div class="w3-row-padding">
+		<ul><div class="w3-row-padding">
 			<p>5. html css for front end</p>
 			<div class="w3-third w3-container w3-margin-bottom">              
 					<a href="https://www.w3schools.com/html/" target="_blank">
@@ -173,18 +176,17 @@
 						</a>
 					</div>
 				</div>
-			</div>
+			</div></ul>
 
-		<p>6. I have used <a href="https://www.heroku.com/home" target="_blank">heroku</a> cloud for deployment</p>
-		<div class="w3-row-padding">
-				<p>2. <a href="https://requests.readthedocs.io/en/master/" target="_blank">Requests</a> lib for sending and handeling http requests between different websites.</p>
-				<div class="w3-third w3-container w3-margin-bottom">              
-					<a href="https://www.heroku.com/home" target="_blank">
-					<img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Heroku_logo.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
-					</a>
+		<ul><p>6. I have used <a href="https://www.heroku.com/home" target="_blank">heroku</a> cloud for deployment</p>
+			<div class="w3-row-padding">
+					<div class="w3-third w3-container w3-margin-bottom">              
+						<a href="https://www.heroku.com/home" target="_blank">
+						<img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Heroku_logo.png" alt="" style="height:250px; width:100%;" class="w3-hover-opacity">
+						</a>
+					</div>
 				</div>
-			</div>
-		</div>
+			</div></ul>
 
 	
 	</body>
