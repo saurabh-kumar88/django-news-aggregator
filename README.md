@@ -5,7 +5,7 @@ This sample project uses web scraping techniques to get latest and updated posts
 
 2. see live at https://django-news-aggregator.herokuapp.com/ you will get lot of information about the system
 
-3. install all dependies link in requirements.txt
+3. Clone entire project and install all dependies link in requirements.txt
 
 4. I have already created a django super user to get access of all data base through django admin panel
       user name : myapp
