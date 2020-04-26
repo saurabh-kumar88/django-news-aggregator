@@ -165,10 +165,10 @@ class News_sorting_and_listing:
         for news in headlines:
             time_Stamp = datetime.strptime(news.timeStamp, "%Y-%m-%d %H:%M:%S")
             
-            #------------testcode---------
             diff = date_obj.Get_Time_Diff(time_Stamp)
-            # remove news which are more then 2 days older
-            if ("days" in diff) and (int(diff[0]) > 2):
+            time_diff = str(diff).split(" ")
+            # Remove news which are older then 2 days
+            if time_diff[1] == "days" and int(time_diff[0]) > 2:
                 instance = TableName.objects.filter(id=news.id)
                 instance.delete()
             else:
