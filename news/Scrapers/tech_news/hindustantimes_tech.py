@@ -4,6 +4,7 @@ sys.path.append('../')
 from ..dataBaseHandler import django_db_Handler, request_Handler
 from news.models import Tech_news
 
+import copy
 
 class Hindustantimes_tech_scraper:
     """ Scrape data from hindustantimes.com """
@@ -11,47 +12,49 @@ class Hindustantimes_tech_scraper:
         pass
         return None
     
-    def start_scraping(self, news_count):
-        self.news_count = news_count
-        for i in range( news_count ):
-            Url = "https://www.hindustantimes.com/tech/"
-            request_obj = request_Handler()
-            Response = request_obj.request_xml(Url)
-            if len(Response) is not None:
-                title = Response.xpath('//div[@class="media-heading headingfour"]/a/@title')[i]
-                
-                title = Response.xpath('//div[@class="media-heading headingfour"]/a/@title')[i]
-                if Tech_news.objects.filter(title = title).exists():
-                    pass
-                else:
-                    link = Response.xpath('//div[@class="media-heading headingfour"]/a/@href')[i]
-                    image = Response.xpath('//div[@class="media-left"]/a/img/@src')[i] 
-                    # Get news posting date
-                    pub_date = Response.xpath('//span[@class="time-dt"]/text()')[i]
-                    # saving to db
-                    db_object = django_db_Handler(
-                        table_name = Tech_news,
-                        Datetime_format="%b %d %Y %H:%M",
-                        website_name = "hindustantimes",
-                        webIcon="https://www.hindustantimes.com/favicon.ico",
-                    )
-                    db_object.Save_to_db(
-                                
-                                news_title = str(title),
-                                page_link = str(link),
-                                img_src = str(image),
-                                Datetime = str(pub_date),
-                                
-                            )
-            
-            
-            
-                    
-
-            
+    def start_scraping(self):
         
+        Url = "https://www.hindustantimes.com/tech/"
+        request_obj = request_Handler()
+        Response = request_obj.request_xml(Url)
+        links = Response.xpath('//article[@class="post-list-small__entry"]/a/@href')
+        
+        Data = []
+        temp_dic = {}
 
+        if len(links):
+            for link in links:
+                
+                Response = request_obj.request_xml("https://tech.hindustantimes.com" + str(link))
+                
+                title = Response.xpath('//title/text()')[0]
+                dateTime = Response.xpath('//meta[@name="Last-Modified"]/@content')[0]
+                image = Response.xpath('//meta[@property="og:image"]/@content')[0]
+                
+                temp_dic['title'] = str(title).strip()
+                temp_dic['link'] = str("https://tech.hindustantimes.com" + link)
+                temp_dic['dateTime'] = (str(str(dateTime).strip()).replace("T", " ")).replace("+05:30", "")
+                temp_dic['image'] = str(image).strip()
 
-
-
-    
+                x = copy.copy(temp_dic)
+                Data.append(x)
+        
+            # saving to db
+            for news in Data:
+                db_object = django_db_Handler(
+                    table_name = Tech_news,
+                    Datetime_format="%Y-%m-%d %H:%M:%S",
+                    website_name = "hindustantimes",
+                    webIcon="https://www.hindustantimes.com/favicon.ico",
+                )
+                db_object.Save_to_db(
+                            
+                            news_title = news['title'],
+                            page_link = news['link'],
+                            img_src = news['image'],
+                            Datetime = news['dateTime'],
+                            
+                        )
+        
+        
+                
