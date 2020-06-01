@@ -53,7 +53,7 @@ def run_scrapers():
 #____________________TECH_________________________________
     
     hindustantimes_tech = Hindustantimes_tech_scraper()
-    hindustantimes_tech.start_scraping(news_count=4)
+    hindustantimes_tech.start_scraping()
 
 #______________________WORLD________________________________
     France24 = France24_scraper()
