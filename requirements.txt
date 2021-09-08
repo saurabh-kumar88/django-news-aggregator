@@ -15,7 +15,7 @@ lightdm-gtk-greeter-settings==1.2.1
 lxml==4.5.0
 olefile==0.44
 pexpect==4.2.1
-Pillow==4.1.1
+Pillow==8.3.2
 pycups==1.9.73
 pygobject==3.24.1
 python-apt==1.4.0b3
