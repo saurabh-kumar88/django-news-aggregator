@@ -22,7 +22,7 @@ python-apt==1.4.0b3
 python-debian==0.1.30
 pytz==2019.3
 PyYAML==3.12
-reportlab==3.4.0
+reportlab==3.5.55
 requests==2.18.1
 six==1.10.0
 soupsieve==2.0
