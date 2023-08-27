@@ -29,7 +29,7 @@ SECRET_KEY = '%^(gj_1$@7hupun=z!(etkv%ft3g5x_1p9^gy5b872xk&&ddwo'
 #DEBUG = os.environ.get('DEBUG_VALUE')
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['localhost', 'django-news-aggregator.herokuapp.com']
 
 # Application definition
 
