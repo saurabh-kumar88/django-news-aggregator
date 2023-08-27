@@ -1,23 +1,23 @@
 asgiref
 beautifulsoup4
 bs4
-certifi
-chardet
-cupshelpers
+# certifi
+# chardet
+# cupshelpers
 defer
 distro-info
 Django
 httplib2
 idna
-language-selector
-lightdm-gtk-greeter-settings
+# language-selector
+# lightdm-gtk-greeter-settings
 lxml
 olefile
 pexpect
 Pillow
-pycups
-pygobject
-python-apt
+# pycups
+# pygobject
+# python-apt
 python-debian
 pytz
 PyYAML
@@ -26,9 +26,9 @@ requests
 six
 soupsieve
 sqlparse
-ubuntu-drivers-common
-ufw
+# ubuntu-drivers-common
+# ufw
 urllib3
-usb-creator
+# usb-creator
 virtualenv
-xkit
+# xkit
